@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 //findAll(), findById(), save(), deleteById(), existsById(), count()...
 @Repository
-public interface PuestoRepository extends JpaRepository<Puesto, Integer> {
+public interface PuestoRepository extends JpaRepository<Puesto, Long> {
 }

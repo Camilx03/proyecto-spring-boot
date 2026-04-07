@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface VehiculoRepository extends JpaRepository<Vehiculo, Integer> {
+public interface VehiculoRepository extends JpaRepository<Vehiculo, Long> {
     //Busca un vehiculo por su matricula
     Optional<Vehiculo> findByMatriculaIgnoreCase(String matricula);
 

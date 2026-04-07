@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
+public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     //busca cliente por dni
     Optional<Cliente> findByDni(String dni);
 
