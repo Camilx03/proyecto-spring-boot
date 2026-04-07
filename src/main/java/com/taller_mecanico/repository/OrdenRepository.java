@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface OrdenRepository extends JpaRepository<Orden, Integer> {
+public interface OrdenRepository extends JpaRepository<Orden, Long> {
     //Buscar por codigo al que se le entrega al cliente
     Optional<Orden> findByCodigo(String id);
 
