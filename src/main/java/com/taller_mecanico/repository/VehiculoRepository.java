@@ -14,5 +14,5 @@ public interface VehiculoRepository extends JpaRepository<Vehiculo, Long> {
     Optional<Vehiculo> findByMatriculaIgnoreCase(String matricula);
 
     //Todos los vehiculos de un cliente concreto
-    List<Vehiculo> findByClienteId(String clienteId);
+    List<Vehiculo> findByClienteId(Long clienteId);
 }

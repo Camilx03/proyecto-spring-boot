@@ -1,5 +1,6 @@
 package com.taller_mecanico.controller;
 
+import com.taller_mecanico.dto.PuestoDTO;
 import com.taller_mecanico.model.Puesto;
 import com.taller_mecanico.service.PuestoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,19 +22,19 @@ public class PuestoController {
 
     @Operation(summary = "Listar todos los puestos")
     @GetMapping
-    public ResponseEntity<List<Puesto>> listar() {
+    public ResponseEntity<List<PuestoDTO>> listar() {
         return ResponseEntity.ok(puestoService.listarTodos());
     }
 
     @Operation(summary = "Buscar puesto por ID")
     @GetMapping("/{id}")
-    public ResponseEntity<Puesto> buscar(@PathVariable Long id) {
+    public ResponseEntity<PuestoDTO> buscar(@PathVariable Long id) {
         return ResponseEntity.ok(puestoService.buscarPorId(id));
     }
 
     @Operation(summary = "Crear un nuevo puesto")
     @PostMapping
-    public ResponseEntity<Puesto> crear(@RequestBody Puesto puesto) {
+    public ResponseEntity<PuestoDTO> crear(@RequestBody PuestoDTO puesto) {
         // CREATED devuelve código 201 en lugar de 200
         // 201 significa que se creó un nuevo recurso
         return ResponseEntity.status(HttpStatus.CREATED)

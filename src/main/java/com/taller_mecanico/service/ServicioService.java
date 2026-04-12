@@ -68,10 +68,6 @@ public class ServicioService {
     }
 
     public ServicioDTO crear(ServicioDTO dto) {
-            servicioRepository.findById(dto.getId()).ifPresent(c -> {
-                throw new BadRequestException(
-                        "Ya existe este servicio " + dto.getId());
-            });
         //creamos la entidad a partir del DTO
         Servicio servicio = new Servicio();
         servicio.setNombre(dto.getNombre());

@@ -67,6 +67,7 @@ public class ClienteService {
         if (dto.getNombre() != null) cliente.setNombre(dto.getNombre());
         if (dto.getTelefono() != null) cliente.setTelefono(dto.getTelefono());
         if (dto.getEmail() != null) cliente.setEmail(dto.getEmail());
+        if (dto.getDni() != null) cliente.setDni(dto.getDni());
         return toDTO(clienteRepository.save(cliente));
     }
 
