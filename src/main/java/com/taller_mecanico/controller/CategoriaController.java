@@ -1,5 +1,6 @@
 package com.taller_mecanico.controller;
 
+import com.taller_mecanico.dto.CategoriaDTO;
 import com.taller_mecanico.dto.ServicioDTO;
 import com.taller_mecanico.model.Categoria;
 import com.taller_mecanico.service.CategoriaService;
@@ -26,13 +27,13 @@ public class CategoriaController {
 
     @Operation(summary = "Listar todas las categorías")
     @GetMapping
-    public ResponseEntity<List<Categoria>> listar() {
+    public ResponseEntity<List<CategoriaDTO>> listar() {
         return ResponseEntity.ok(categoriaService.findAll());
     }
 
     @Operation(summary = "Crear una nueva categoría")
     @PostMapping
-    public ResponseEntity<Categoria> crear(@RequestBody Categoria categoria) {
+    public ResponseEntity<CategoriaDTO> crear(@RequestBody CategoriaDTO categoria) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(categoriaService.create(categoria));
     }

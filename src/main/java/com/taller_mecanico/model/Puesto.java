@@ -1,9 +1,8 @@
 package com.taller_mecanico.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 /*
 Entidades principales.
 puesto: Punto de recepción/atención (recepción, elevador 1, elevador ITV...)
@@ -61,11 +60,13 @@ GET /api/ordenes/{id} — detalle completo de una orden
 */
 @Entity
 @Table(name = "puestos")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Puesto {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     // nombre del puesto: Recepción, Elevador 1, Elevador ITV.

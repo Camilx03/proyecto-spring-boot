@@ -1,14 +1,13 @@
 package com.taller_mecanico.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 //Tabla intermedia
 @Entity
 @Table(name = "orden_servicios")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrdenServicio {

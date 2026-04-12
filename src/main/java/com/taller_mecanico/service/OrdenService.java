@@ -71,7 +71,7 @@ public class OrdenService {
     }
 
     // 4. CREAR ORDEN: Genera el código y establece estado inicial
-    public OrdenDTO crear(OrdenDTO dto) {
+    /*public OrdenDTO crear(OrdenDTO dto) {
         Vehiculo vehiculo = vehiculoRepository.findById(dto.getVehiculoId())
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Vehículo", dto.getVehiculoId()));
@@ -90,6 +90,51 @@ public class OrdenService {
         orden.setCodigo(generarCodigo(puesto.getTipo()));
 
         return toDTO(ordenRepository.save(orden));
+    }*/
+
+    public OrdenDTO crear(OrdenDTO dto) {
+        // 1. Buscamos las entidades básicas
+        Vehiculo vehiculo = vehiculoRepository.findById(dto.getVehiculoId())
+                .orElseThrow(() -> new ResourceNotFoundException("Vehículo", dto.getVehiculoId()));
+
+        Puesto puesto = puestoRepository.findById(dto.getPuestoId())
+                .orElseThrow(() -> new ResourceNotFoundException("Puesto", dto.getPuestoId()));
+
+        // 2. Creamos la cabecera de la Orden
+        Orden orden = new Orden();
+        orden.setVehiculo(vehiculo);
+        orden.setPuesto(puesto);
+        orden.setEstado(EstadoOrden.RECIBIDO);
+        orden.setFechaEntrada(LocalDateTime.now());
+        orden.setObservaciones(dto.getObservaciones());
+        orden.setCodigo(generarCodigo(puesto.getTipo()));
+
+        // 3. PROCESAMOS LOS SERVICIOS
+        if (dto.getServicios() != null && !dto.getServicios().isEmpty()) {
+            for (OrdenServicioDTO sDto : dto.getServicios()) {
+                // Buscamos el servicio real en la DB
+                Servicio servicio = servicioRepository.findById(sDto.getServicioId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Servicio", sDto.getServicioId()));
+
+                if (!servicio.getActivo()) {
+                    throw new BadRequestException("El servicio '" + servicio.getNombre() + "' no está activo.");
+                }
+
+                // Creamos la línea de la tabla intermedia
+                OrdenServicio linea = new OrdenServicio();
+                linea.setOrden(orden); // Vinculamos a esta orden
+                linea.setServicio(servicio);
+                linea.setCantidad(sDto.getCantidad());
+                linea.setPrecioUnitario(servicio.getPrecio()); // Congelamos el precio actual
+
+                // Añadimos la línea a la lista de la entidad Orden
+                orden.getServicios().add(linea);
+            }
+        }
+        // 4. Guardamos (JPA guarda la Orden y sus OrdenServicio por el CascadeType.ALL)
+        Orden ordenGuardada = ordenRepository.save(orden);
+
+        return toDTO(ordenGuardada);
     }
 
     // 5. ACTUALIZAR ESTADO: Para mover la orden por el flujo (RECIBIDO -> REVISIÓN...)
@@ -226,7 +271,6 @@ public class OrdenService {
         dto.setCodigo(orden.getCodigo());
         dto.setEstado(orden.getEstado());
         dto.setFechaEntrada(orden.getFechaEntrada());
-        dto.setFechaEntrega(orden.getFechaEntrada());
         dto.setObservaciones(orden.getObservaciones());
         dto.setVehiculoId(orden.getVehiculo().getId());
         dto.setMatricula(orden.getVehiculo().getMatricula());

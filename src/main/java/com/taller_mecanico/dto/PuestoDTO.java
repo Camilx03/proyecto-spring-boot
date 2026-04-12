@@ -8,14 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServicioDTO {
+public class PuestoDTO {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY) // Oculta el campo en peticiones POST/PUT
     private Long id;
     private String nombre;
-    private Double precio;
-    @Schema(accessMode = Schema.AccessMode.READ_ONLY) // Oculta el campo en peticiones POST/PUT
-    private Boolean activo;
-    private Long categoriaId;
-    @Schema(accessMode = Schema.AccessMode.READ_ONLY) // Oculta el campo en peticiones POST/PUT
-    private String categoriaNombre;
+    private String tipo;
 }
